@@ -1,7 +1,4 @@
-let transactions = [];
-let myChart;
-
-export function populateTotal() {
+export function populateTotal(transactions) {
     // reduce transaction amounts to a single total value
     let total = transactions.reduce((total, t) => {
       return total + parseInt(t.value);
@@ -11,7 +8,7 @@ export function populateTotal() {
     totalEl.textContent = total;
   }
   
-export function populateTable() {
+export function populateTable(transactions) {
     let tbody = document.querySelector("#tbody");
     tbody.innerHTML = "";
 
@@ -27,7 +24,7 @@ export function populateTable() {
     });
 }
 
-export function populateChart() {
+export function populateChart(transactions, myChart) {
     // copy array and reverse it
     let reversed = transactions.slice().reverse();
     let sum = 0;

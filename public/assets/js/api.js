@@ -79,4 +79,4 @@ export function sendTransaction(isAdding) {
       nameEl.value = "";
       amountEl.value = "";
     });
-  }
+}
