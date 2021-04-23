@@ -1,18 +1,11 @@
 import { populateChart, populateTable, populateTotal } from "./domMethods";
+import { saveRecord } from './indexedDb';
 
 export function getTransactions() {
     fetch("/api/transaction")
     .then(response => {
         return response.json();
     })
-    .then(data => {
-        // save db data on global variable
-        transactions = data;
-
-        populateTotal();
-        populateTable();
-        populateChart();
-    });
 }
 
 export function sendTransaction(isAdding) {

@@ -1,9 +1,31 @@
 import { getTransactions, sendTransaction } from './api';
 import { populateChart, populateTable, populateTotal } from './domMethods';
-import { postIdbTransactions, getIdbTransactions } from './indexedDb';
+import { checkDatabase } from './indexedDb';
 
 let transactions = [];
 let myChart;
+let db;
+let budgetVersion;
+const request = indexedDB.open('BudgetDB', budgetVersion || 1);
+
+request.onupgradeneeded = function (e) {
+  db = e.target.result;
+  if (db.objectStoreNames.length === 0) {
+    db.createObjectStore('BudgetStore', { autoIncrement: true });
+  }
+};
+
+request.onerror = function (e) {
+  console.log(`Woops! ${e.target.errorCode}`);
+};
+
+request.onsuccess = function (e) {
+  console.log('success');
+  db = e.target.result;
+  if (navigator.onLine) {
+    checkDatabase();
+  }
+};
 
 window.addEventListener('load', () => {
   if ('serviceWorker' in navigator) {
@@ -18,7 +40,7 @@ window.addEventListener('load', () => {
     sendTransaction(false);
   };
 
-  window.addEventListener('online', postIdbTransactions);
+  window.addEventListener('online', checkDatabase);
 
   // If we are not online, add transactions
   getTransactions().then(data => {
