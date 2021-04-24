@@ -53,21 +53,21 @@ fetch("/api/transaction")
     };
   }
   
-  request.onsuccess = function (e) {
-    console.log('success');
-    db = e.target.result;
-    if (navigator.onLine) {
-      checkDatabase();
-    }
-  };
+request.onsuccess = function (e) {
+  console.log('success');
+  db = e.target.result;
+  if (navigator.onLine) {
+    checkDatabase();
+  }
+};
   
-  function saveRecord(record) {
-    const transaction = db.transaction(['BudgetStore'], 'readwrite');
-    const store = transaction.objectStore('BudgetStore');
-    store.add(record);
-  };
-  
-  window.addEventListener('online', checkDatabase);
+function saveRecord(record) {
+  const transaction = db.transaction(['BudgetStore'], 'readwrite');
+  const store = transaction.objectStore('BudgetStore');
+  store.add(record);
+};
+
+window.addEventListener('online', checkDatabase);
 
 function populateTotal() {
   let total = transactions.reduce((total, t) => {
