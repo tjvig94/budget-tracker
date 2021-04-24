@@ -11,7 +11,6 @@ const FILES_TO_CACHE = [
 const STATIC_CACHE = "static-cache-v2";
 const DATA_CACHE = "data-cache-v1";
 
-// Install
 self.addEventListener('install', evt => {
     evt.waitUntil(
         Promise.all([
